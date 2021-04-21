@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRoleInput } from './dto/create-role.input';
-import { UpdateRoleInput } from './dto/update-role.input';
+import { Prisma, Role } from '@prisma/client';
+import { PrismaService } from 'src/modules/shared/services/prisma.service';
 
 @Injectable()
 export class RoleService {
-  create(createRoleInput: CreateRoleInput) {
-    return 'This action adds a new role';
+  constructor(private prismaService: PrismaService) {}
+  create(data: Prisma.RoleCreateInput) {
+    return this.prismaService.role.create({ data });
   }
 
-  findAll() {
-    return `This action returns all role`;
+  async roles(
+    skip?: number,
+    take?: number,
+    cursor?: Prisma.RoleWhereUniqueInput,
+    where?: Prisma.RoleWhereInput,
+    orderBy?: Prisma.RoleOrderByInput,
+  ): Promise<Role[]> {
+    return this.prismaService.role.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
+  async role(
+    roleWhereUniqueInput: Prisma.RoleWhereUniqueInput,
+  ): Promise<Role | null> {
+    return this.prismaService.role.findFirst({ where: roleWhereUniqueInput });
   }
 
-  update(id: number, updateRoleInput: UpdateRoleInput) {
-    return `This action updates a #${id} role`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+  async update(params: {
+    where: Prisma.RoleWhereUniqueInput;
+    data: Prisma.RoleUpdateInput;
+  }): Promise<Role> {
+    const { data, where } = params;
+    return this.prismaService.role.update({ data, where });
   }
 }

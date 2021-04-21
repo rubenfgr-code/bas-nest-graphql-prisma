@@ -6,15 +6,15 @@ export class Profile {
   @Field(() => Int)
   id: number;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   firstname: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   lastname: string;
 
-  @Field(() => GENDER)
+  @Field(() => GENDER, { nullable: true })
   gender: GENDER;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   birthdate: Date;
 }

@@ -7,11 +7,6 @@ input CreateProfileInput {
   exampleField: Int!
 }
 
-input CreateRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 input CreateUserInput {
   """Example field (placeholder)"""
   exampleField: Int!
@@ -24,10 +19,9 @@ enum Gender {
 
 type Mutation {
   createProfile(createProfileInput: CreateProfileInput!): Profile!
-  createRole(createRoleInput: CreateRoleInput!): Role!
+  createRole(name: String!): Role!
   createUser(createUserInput: CreateUserInput!): User!
   removeProfile(id: Int!): Profile!
-  removeRole(id: Int!): Role!
   removeUser(id: Int!): User!
   updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
@@ -35,21 +29,23 @@ type Mutation {
 }
 
 type Profile {
-  birthdate: Timestamp!
-  firstname: String!
-  gender: Gender!
+  birthdate: Timestamp
+  firstname: String
+  gender: Gender
   id: Int!
-  lastname: String!
+  lastname: String
 }
 
 type Query {
   profile(id: Int!): Profile!
   role(id: Int!): Role!
+  roles: [Role!]!
   user(id: Int!): User!
 }
 
 type Role {
   id: Int!
+  isActive: Boolean!
   name: String!
 }
 
@@ -65,9 +61,9 @@ input UpdateProfileInput {
 }
 
 input UpdateRoleInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
+  isActive: Boolean
+  name: String
 }
 
 input UpdateUserInput {

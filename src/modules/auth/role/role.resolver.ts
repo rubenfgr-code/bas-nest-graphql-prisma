@@ -1,35 +1,30 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { RoleService } from './role.service';
-import { Role } from './entities/role.entity';
-import { CreateRoleInput } from './dto/create-role.input';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UpdateRoleInput } from './dto/update-role.input';
+import { Role } from './entities/role.entity';
+import { RoleService } from './role.service';
 
 @Resolver(() => Role)
 export class RoleResolver {
   constructor(private readonly roleService: RoleService) {}
 
   @Mutation(() => Role)
-  createRole(@Args('createRoleInput') createRoleInput: CreateRoleInput) {
-    return this.roleService.create(createRoleInput);
+  createRole(@Args('name', { type: () => String }) name: string) {
+    return this.roleService.create({ name });
   }
 
-  @Query(() => [Role], { name: 'role' })
+  @Query(() => [Role], { name: 'roles' })
   findAll() {
-    return this.roleService.findAll();
+    return this.roleService.roles();
   }
 
   @Query(() => Role, { name: 'role' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.roleService.findOne(id);
+  findOneId(@Args('id', { type: () => Int }) id: number) {
+    return this.roleService.role({ id });
   }
 
   @Mutation(() => Role)
   updateRole(@Args('updateRoleInput') updateRoleInput: UpdateRoleInput) {
-    return this.roleService.update(updateRoleInput.id, updateRoleInput);
-  }
-
-  @Mutation(() => Role)
-  removeRole(@Args('id', { type: () => Int }) id: number) {
-    return this.roleService.remove(id);
+    const { id, ...data } = updateRoleInput;
+    return this.roleService.update({ where: { id }, data });
   }
 }
