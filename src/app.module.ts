@@ -17,6 +17,9 @@ import { AuthModule } from './modules/auth/auth.module';
           configService.get<string>('GRAPHQL_SCHEMAFILE'),
         ),
         sortSchema: configService.get<boolean>('GRAPHQL_SORTSCHEMA'),
+        buildSchemaOptions: {
+          dateScalarMode: 'timestamp',
+        },
       }),
       inject: [ConfigService],
     }),
