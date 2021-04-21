@@ -1,0 +1,89 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateProfileInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+enum Gender {
+  FEMALE
+  MALE
+}
+
+type Mutation {
+  createProfile(createProfileInput: CreateProfileInput!): Profile!
+  createRole(createRoleInput: CreateRoleInput!): Role!
+  createUser(createUserInput: CreateUserInput!): User!
+  removeProfile(id: Int!): Profile!
+  removeRole(id: Int!): Role!
+  removeUser(id: Int!): User!
+  updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
+  updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+}
+
+type Profile {
+  birthdate: Timestamp!
+  firstname: String!
+  gender: Gender!
+  id: Int!
+  lastname: String!
+}
+
+type Query {
+  profile(id: Int!): Profile!
+  role(id: Int!): Role!
+  user(id: Int!): User!
+}
+
+type Role {
+  id: Int!
+  name: String!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+input UpdateProfileInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateRoleInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+type User {
+  createdAt: Timestamp!
+  email: String!
+  id: Int!
+  isActive: Boolean!
+  password: String!
+  profile: Profile!
+  role: Role!
+  updatedAt: Timestamp!
+  username: String!
+}
