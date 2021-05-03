@@ -2,14 +2,39 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateProfileInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input CreateUserInput {
+  email: String!
+  emailRepeat: String!
+  password: String!
+  passwordRepeat: String!
+  username: String!
 }
 
-input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+"""Date custom scalar type"""
+scalar Date
+
+input FindAllUsersInput {
+  """Require Prisma.UserWhereUniqueInput"""
+  cursor: String
+
+  """Require Prisma.UserOrderByInput"""
+  orderBy: String
+  skip: Int
+  take: Int
+
+  """Require Prisma.UserWhereInput"""
+  where: String
+}
+
+input FindOneRoleInput {
+  id: Int
+  name: String
+}
+
+input FindOneUserInput {
+  email: String
+  id: Int
+  username: String
 }
 
 enum Gender {
@@ -18,18 +43,14 @@ enum Gender {
 }
 
 type Mutation {
-  createProfile(createProfileInput: CreateProfileInput!): Profile!
   createRole(name: String!): Role!
   createUser(createUserInput: CreateUserInput!): User!
-  removeProfile(id: Int!): Profile!
-  removeUser(id: Int!): User!
-  updateProfile(updateProfileInput: UpdateProfileInput!): Profile!
   updateRole(updateRoleInput: UpdateRoleInput!): Role!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Profile {
-  birthdate: Timestamp
+  birthday: Date
   firstname: String
   gender: Gender
   id: Int!
@@ -37,10 +58,10 @@ type Profile {
 }
 
 type Query {
-  profile(id: Int!): Profile!
-  role(id: Int!): Role!
+  role(findOneRoleInput: FindOneRoleInput!): Role
   roles: [Role!]!
-  user(id: Int!): User!
+  user(findOneUserInput: FindOneUserInput!): User
+  users(findAllUserInput: FindAllUsersInput): [User!]!
 }
 
 type Role {
@@ -49,15 +70,12 @@ type Role {
   name: String!
 }
 
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
-
 input UpdateProfileInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  birthday: Date
+  firstname: String
+  gender: Gender
   id: Int!
+  lastname: String
 }
 
 input UpdateRoleInput {
@@ -67,19 +85,21 @@ input UpdateRoleInput {
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
+  isActive: Boolean
+  profile: UpdateProfileInput
+  roleId: Int
+  username: String
 }
 
 type User {
-  createdAt: Timestamp!
+  createdAt: Date!
   email: String!
   id: Int!
   isActive: Boolean!
   password: String!
   profile: Profile!
   role: Role!
-  updatedAt: Timestamp!
+  updatedAt: Date!
   username: String!
 }

@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Role } from '@prisma/client';
-import { PrismaService } from 'src/modules/shared/services/prisma.service';
+import { PrismaService } from '../../shared/services/prisma.service';
 
 @Injectable()
 export class RoleService {
   constructor(private prismaService: PrismaService) {}
-  create(data: Prisma.RoleCreateInput) {
+
+  async create(data: Prisma.RoleCreateInput): Promise<Role> {
     return this.prismaService.role.create({ data });
   }
 
-  async roles(
+  async findAll(
     skip?: number,
     take?: number,
     cursor?: Prisma.RoleWhereUniqueInput,
@@ -25,10 +26,12 @@ export class RoleService {
     });
   }
 
-  async role(
+  async findOne(
     roleWhereUniqueInput: Prisma.RoleWhereUniqueInput,
   ): Promise<Role | null> {
-    return this.prismaService.role.findFirst({ where: roleWhereUniqueInput });
+    return this.prismaService.role.findFirst({
+      where: roleWhereUniqueInput,
+    });
   }
 
   async update(params: {

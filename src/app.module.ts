@@ -1,5 +1,6 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_PIPE } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { AppController } from './app.controller';
@@ -27,12 +28,10 @@ import { SharedModule } from './modules/shared/shared.module';
           configService.get<string>('GRAPHQL_SCHEMAFILE'),
         ),
         sortSchema: configService.get<boolean>('GRAPHQL_SORTSCHEMA'),
-        buildSchemaOptions: {
-          dateScalarMode: 'timestamp',
-        },
       }),
       inject: [ConfigService],
     }),
+
     // ----------------------------
     //  Other Modules
     // ----------------------------
@@ -40,6 +39,18 @@ import { SharedModule } from './modules/shared/shared.module';
     SharedModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // ==================================================
+    //  Validation Global Pipes
+    // ==================================================
+    {
+      provide: APP_PIPE,
+      useFactory: () =>
+        new ValidationPipe({
+          disableErrorMessages: false,
+        }),
+    },
+  ],
 })
 export class AppModule {}

@@ -2,10 +2,10 @@
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = env("PRISMA_URL")
 }
 
-generator client {
+generator dev {
   provider = "prisma-client-js"
 }
 
@@ -31,7 +31,15 @@ model Role {
 }
 
 model Profile {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-  User User[]
+  id        Int       @id @default(autoincrement())
+  firstname String?
+  lastname  String?
+  gender    Gender?
+  birthday  DateTime?
+  User      User[]
+}
+
+enum Gender {
+  MALE
+  FEMALE
 }

@@ -15,6 +15,6 @@ export class Profile {
   @Field(() => GENDER, { nullable: true })
   gender: GENDER;
 
-  @Field(() => Date, { nullable: true })
-  birthdate: Date;
+  @Field({ nullable: true })
+  birthday: Date;
 }

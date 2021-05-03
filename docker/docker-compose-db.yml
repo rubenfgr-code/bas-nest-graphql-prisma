@@ -6,13 +6,10 @@ services:
     container_name: bas-nest-graphql-prisma-db
     image: mariadb
     restart: always
-    command: --default-authentication-plugin=mysql_native_password
     ports:
       - 8890:3306
     environment:
-      MYSQL_ROOT_PASSWORD: devroot
-      MYSQL_USER: dev
-      MYSQL_PASSWORD: dev
+      - MYSQL_ROOT_PASSWORD=dev
     volumes:
       - bas-nest-graphql-prisma-db:/var/lib/mysql
 
