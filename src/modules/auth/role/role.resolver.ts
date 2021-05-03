@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { FindOneRoleInput } from './input-types/find-one-role.input';
-import { UpdateRoleInput } from './input-types/update-role.input';
-import { Role } from './object-types/role.entity';
+import { FindOneRoleInput } from './dto/find-one-role.input';
+import { UpdateRoleInput } from './dto/update-role.input';
+import { Role } from './entities/role.entity';
 import { RoleService } from './role.service';
 
 @Resolver(() => Role)

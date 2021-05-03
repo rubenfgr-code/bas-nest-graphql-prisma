@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Profile } from '../../profile/entities/profile.entity';
-import { Role } from '../../role/object-types/role.entity';
+import { Role } from '../../role/entities/role.entity';
 
 @ObjectType()
 export class User {
